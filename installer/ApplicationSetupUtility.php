@@ -43,8 +43,14 @@ public static function createDB() {
 		$dbPort = $_SESSION['dbInfo']['dbHostPort'];
 		$dbUser = $_SESSION['dbInfo']['dbUserName'];
 		$dbPassword = $_SESSION['dbInfo']['dbPassword'];
+        $dbHostPortModifier = $_SESSION['dbInfo']['dbHostPortModifier'];
 
-         self::$conn = mysqli_connect($dbHost, $dbUser, $dbPassword,null,3306,$dbPort);
+        if ($dbHostPortModifier == 'socket') {
+            self::$conn = mysqli_connect($dbHost, $dbUser, $dbPassword,null,null, $dbPort);
+        } else {
+            self::$conn = mysqli_connect($dbHost, $dbUser, $dbPassword,null,$dbPort);
+        }
+
         if (self::$conn) {
 
 			if (mysqli_select_db(self::$conn, $dbName)) {
@@ -94,7 +100,13 @@ public static function createDB() {
 
 public static function connectDB() {
 
-    if(!self::$conn = mysqli_connect($_SESSION['dbInfo']['dbHostName'], $_SESSION['dbInfo']['dbUserName'], $_SESSION['dbInfo']['dbPassword'], "",3306, $_SESSION['dbInfo']['dbHostPort'])) {
+    if ($_SESSION['dbInfo']['dbHostPortModifier'] == 'socket') {
+        self::$conn = mysqli_connect($_SESSION['dbInfo']['dbHostName'], $_SESSION['dbInfo']['dbUserName'], $_SESSION['dbInfo']['dbPassword'], "",null, $_SESSION['dbInfo']['dbHostPort']);
+     } else {
+        self::$conn = mysqli_connect($_SESSION['dbInfo']['dbHostName'], $_SESSION['dbInfo']['dbUserName'], $_SESSION['dbInfo']['dbPassword'], "",$_SESSION['dbInfo']['dbHostPort']);
+     }
+
+    if(!self::$conn) {
         $_SESSION['error'] =  'Database Connection Error!';
 		return;
 	}
