@@ -50,33 +50,33 @@ class OrangeHrmRegistration
      * @return bool
      */
     public function sendRegistrationData() {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->getRegistrationUrl());
-        curl_setopt($ch, CURLOPT_POST, 1);
-
-        $data = "username=" . $_SESSION['defUser']['AdminUserName']
-            . "&email=" . $_SESSION['defUser']['organizationEmailAddress']
-            . "&telephone=" . ($_SESSION['defUser']['contactNumber'] ? $_SESSION['defUser']['contactNumber'] : "Not captured")
-            . "&admin_first_name=" . $_SESSION['defUser']['adminEmployeeFirstName']
-            . "&admin_last_name=" . $_SESSION['defUser']['adminEmployeeLastName']
-            . "&timezone=" . ($_SESSION['defUser']['timezone'] ? $_SESSION['defUser']['timezone'] : "Not captured")
-            . "&language=" . ($_SESSION['defUser']['language'] ? $_SESSION['defUser']['language'] : "Not captured")
-            . "&country=" . $_SESSION['defUser']['country']
-            . "&organization_name=" . $_SESSION['defUser']['organizationName']
-            . "&type=" . "0"
-            . "&instance_identifier=" . $this->getInstanceIdentifier();
-
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_exec($ch);
-        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        if (!($http_status === 200)) {
-            return false;
-        } else {
-
-            return true;
-        }
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_URL, $this->getRegistrationUrl());
+//        curl_setopt($ch, CURLOPT_POST, 1);
+//
+//        $data = "username=" . $_SESSION['defUser']['AdminUserName']
+//            . "&email=" . $_SESSION['defUser']['organizationEmailAddress']
+//            . "&telephone=" . ($_SESSION['defUser']['contactNumber'] ? $_SESSION['defUser']['contactNumber'] : "Not captured")
+//            . "&admin_first_name=" . $_SESSION['defUser']['adminEmployeeFirstName']
+//            . "&admin_last_name=" . $_SESSION['defUser']['adminEmployeeLastName']
+//            . "&timezone=" . ($_SESSION['defUser']['timezone'] ? $_SESSION['defUser']['timezone'] : "Not captured")
+//            . "&language=" . ($_SESSION['defUser']['language'] ? $_SESSION['defUser']['language'] : "Not captured")
+//            . "&country=" . $_SESSION['defUser']['country']
+//            . "&organization_name=" . $_SESSION['defUser']['organizationName']
+//            . "&type=" . "0"
+//            . "&instance_identifier=" . $this->getInstanceIdentifier();
+//
+//        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//        curl_exec($ch);
+//        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+//        curl_close($ch);
+//        if (!($http_status === 200)) {
+//            return false;
+//        } else {
+//
+//            return true;
+//        }
     }
 
     /**
