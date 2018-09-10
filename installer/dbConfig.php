@@ -104,6 +104,9 @@ document.frmInstall.submit();
 	<font color="Red">
 	    <?php if($error == 'WRONGDBINFO') {
 	    		$msg = '';
+	    		var_dump($_SESSION['mysqlErrNo']);
+                var_dump($_SESSION['errorMsg']);
+                var_dump($_SESSION['dbInfo']);
 	    		if(isset($_SESSION['mysqlErrNo']) && $_SESSION['mysqlErrNo'] == '1045') {
 
 					if (isset($_SESSION['errorMsg'])) {
@@ -112,10 +115,16 @@ document.frmInstall.submit();
 
 					$msg .= 'Please Check Privileged Database Username and Password Correct.';
 
-	    		}else if(isset($_SESSION['mysqlErrNo']) && $_SESSION['mysqlErrNo'] == '2003'){
+	    		} else if(isset($_SESSION['mysqlErrNo']) && in_array($_SESSION['mysqlErrNo'], ['2003', '2005'])){
 	    			if (isset($_SESSION['errorMsg'])) {
 						$msg = $_SESSION['errorMsg'] . '. ';
 					}
+
+					$msg .= 'Please Make Sure MySQL Server Is Up And Running.';
+	    		} else if(isset($_SESSION['mysqlErrNo']) && $_SESSION['mysqlErrNo'] == '2002'){
+                    if (isset($_SESSION['errorMsg'])) {
+                        $msg = $_SESSION['errorMsg'] . '. ';
+                    }
 
 					$msg .= 'Please Make Sure MySQL Server Is Up And Running.';
 	    		} else {
