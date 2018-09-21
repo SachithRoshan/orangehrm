@@ -268,7 +268,8 @@ class SystemValidator
         $dsn .= "charset=utf8mb4";
 
         try {
-            return new PDO($dsn, $username, $password);
+            $dbConn = new PDO($dsn, $username, $password);
+            return $dbConn;
         } catch (PDOException $e) {
             throw $e;
         }
