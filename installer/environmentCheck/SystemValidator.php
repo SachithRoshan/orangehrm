@@ -232,4 +232,45 @@ class SystemValidator
         }
         return false;
     }
+
+    /**
+     * @param $username
+     * @param $password
+     * @param null $host
+     * @param null $port
+     * @param null $dbname
+     * @param null $unix_socket
+     * @return null|PDO|void
+     */
+    public function createDbConnection(
+        $username,
+        $password,
+        $host = null,
+        $port = null,
+        $dbname = null,
+        $unix_socket = null
+    ) {
+        $dsn = "mysql:";
+
+        if (!is_null($host)) {
+            $dsn .= "host=" . $host . ";";
+        }
+        if (!is_null($port)) {
+            $dsn .= "port=" . $port . ";";
+        }
+        if (!is_null($unix_socket)) {
+            $dsn = "mysql:unix_socket=" . $unix_socket . ";";
+        }
+        if (!is_null($dbname)) {
+            $dsn .= "dbname=" . $dbname . ";";
+        }
+
+        $dsn .= "charset=utf8mb4";
+
+        try {
+            return new PDO($dsn, $username, $password);
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }
 }
